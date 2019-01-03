@@ -1,5 +1,4 @@
 import sbt._
-import sbtassembly.AssemblyPlugin.autoImport._
 import Configurations._
 import Dependencies._
 
@@ -8,9 +7,9 @@ lazy val root = project.in(file(".")).
     aggregate(
       rollserver)
 
-
 lazy val rollserver = project.in(file("rollserver")).
   configure(defaultSettings(target = true)).
+  enablePlugins(JavaServerAppPackaging).
   settings(
     libraryDependencies ++= akkaDeps++
         akkaHttpDeps++
@@ -19,5 +18,5 @@ lazy val rollserver = project.in(file("rollserver")).
         testDeps++
         loggingDeps,
     name := "rollserver",
-    mainClass in assembly := Some("swind.rollserver.Main")
+    mainClass := Some("swind.rollserver.Main")
   )
